@@ -1,0 +1,44 @@
+package com.cg;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.cg.dao.ProductDaoImpl;
+import com.cg.service.ProductServiceImpl;
+
+@RunWith(Runner.class)
+@SpringBootTest
+
+class TestCase {
+
+
+	ProductDaoImpl productdao=Mockito.mock(ProductDaoImpl.class);
+	ProductServiceImpl service=new ProductServiceImpl(productdao);
+	
+	@Test
+	void checkProductid() {
+		when(productdao.productId(1001)).thenReturn("valid");
+      		 assertEquals(1001,service.productId(1001));
+	}
+	
+	@Test
+	void checkProductNameTest1()
+	{
+		when(productdao.productName("123")).thenReturn("invalid");
+		assertEquals("invalid", service.productName("123"));
+	}
+	
+	@Test
+	void checkProductNameTest2()
+	{
+	when(productdao.productName("Basketball")).thenReturn("valid");
+	assertEquals("valid", service.productName("Basketball"));
+		
+	}
+}
