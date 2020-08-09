@@ -1,0 +1,33 @@
+package com.cg;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.cg.dao.RawMaterialDao;
+import com.cg.service.RawMaterialService;
+
+@SpringBootTest
+class RawMaterialStockApplicationTests {
+
+	RawMaterialDao rawMaterialdao=Mockito.mock(RawMaterialDao.class);
+	RawMaterialService service =new RawMaterialService(rawMaterialdao);
+	
+	
+	@Test
+	void checkRawMaterialId1() {
+		when(rawMaterialdao.doesRawMaterialOrderIdExistInStock("101")).thenReturn(true);
+      		 assertEquals(101,service.doesRawMaterialOrderIdExistInStock("101"));
+	}
+	
+	@Test
+	void checkRawMaterialId2()
+	{
+		when(rawMaterialdao.doesRawMaterialOrderIdExistInStock("10")).thenReturn(false);
+		assertEquals(false, service.doesRawMaterialOrderIdExistInStock("10"));
+	}
+
+}
